@@ -1,0 +1,61 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-image: url("/static/pictures/backgrounds/loginbg.jpg");
+}
+
+.main_container {
+	box-sizing: border-box;
+	margin: auto;
+	padding: 20px;
+	background-color: white;
+	width: 90%;
+	height: 100vh;
+}
+
+.navbar_main {
+	display: grid;
+	grid-template-rows: 100px 50px;
+	grid-gap: 5px;
+}
+
+.navbar_section{
+	/* border: 1px solid black; */
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+
+.navbar_section.top {
+	justify-content: space-between;
+}
+
+.navbar_section.bottom {
+	justify-content: space-around;
+}
+
+.nav_item {
+	/* border: 1px solid black; */
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.menu_item:hover, .menu_item.selected {
+	text-decoration-color: black;
+	cursor: pointer;
+}
+
+.menu_item{
+	font-size: 26px;
+	text-decoration: underline;
+	text-decoration-color: gray;
+	font-weight: bolder;
+}
+
+.avatar_pic{
+	max-height: 100%;
+	border-radius: 50%;
+	align-self: flex-end;
+}

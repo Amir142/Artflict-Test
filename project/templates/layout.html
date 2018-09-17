@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+
+	<link type="text/css" rel="stylesheet" href="../static/css/layout.css" />
+
+	<script src="https://code.jquery.com/jquery-3.3.1.js"
+		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		crossorigin="anonymous">
+	</script>
+
+	<script type="text/javascript" src="../static/js/layout.js"></script>
+
+	{% block head %}
+	{% endblock %}
+
+
+
+</head>
+<body>
+	<div class="main_container">
+		<div class="navbar_main">
+			<div class="navbar_section top">
+				<img alt="logo" src="../static/pictures/logos/horizontal_black_logo.png" class="nav_item" id="main_logo" />
+				<div class="search_bar nav_item">
+					search
+				</div>
+				<img alt="profile picture" src="../static/pictures/avatar.png" class="avatar_pic nav_item" />
+			</div>
+			<div class="navbar_section bottom">
+				<div class="nav_item menu_item">
+					Home
+				</div>
+				<div class="nav_item menu_item">
+					Stories
+				</div>
+				<div class="nav_item menu_item">
+					Saved Artists
+				</div>
+				<div class="nav_item menu_item">
+					About
+				</div>
+				<div class="nav_item menu_item">
+					Log Out
+				</div>
+			</div>
+		</div>
+
+		<div class="content_block">
+			{% block content %}
+			{% endblock %}
+		</div>
+
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.js"
+		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		crossorigin="anonymous"></script>
+
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/login.css') }}">
+	<meta charset="utf-8">
+	<script>
+		var getdata = {{data | tojson}};
+	</script>
+	<script src="{{ url_for('static', filename='js/loginjs.js') }}">
+	</script>
+</head>
+<body>
+
+	<div class="login_page_body">
+
+		<div class="login_modal_container">
+			<div class="imgcontainer">
+				<img src="static/pictures/logos/nlogo.png" alt="logo" id="logo">
+			</div>
+
+			{% if not show or show == "login" %}
+
+			<form id="login_form" class="form_instance" action="{{ url_for('users.login') }}" method="post">
+				{{ form.csrf_token }}
+
+				<input type="text" name="username" id="login_textbox_username"
+				class=" login_page_textbox" placeholder="Username">
+				<span id="wrong_cred_msg" class="error_message">
+					wrong username or password
+				</span>
+
+				<input type="password" name="password" id="login_textbox_password"
+				class=" login_page_textbox" placeholder="Password">
+
+
+				<button id="login_submit" class="login_btn" type="submit">LOG IN</button>
+
+				<span class="switch_text">Don't Have An Account?<a class = 'switch_link' id="switch_to_signup"> Sign up here!</a></span>
+
+
+			</form>
+
+			{% elif show == "signup" %}
+
+			<form id="signup_form" class="form_instance" action="{{ url_for('users.register') }}" method="post">
+				{{ form.csrf_token }}
+				<input type="text" name="displayname" id="signup_textbox_displayname"
+				class=" login_page_textbox" placeholder="Full Name">
+				<span id="displayname_error_message" class="error_message">
+					displayname cannot be empty
+				</span>
+
+				<input type="text" name="username" id="signup_textbox_username"
+				class=" login_page_textbox" placeholder="Username">
+				<span id="username_error_message" class="error_message">
+					username is taken
+				</span>
+
+				<input type="password" name="password" id="signup_textbox_password"
+				class=" login_page_textbox" placeholder="Password">
+				<span id="password_err_msg" class="error_message">
+					password cannot be empty
+				</span>
+
+				<input type="password" name="confirm_pass" id="signup_textbox_password_confirm"
+				class=" login_page_textbox" placeholder="Confirm Password">
+				<span id="pass_dont_match_msg" class="error_message">
+					passwords do not match
+				</span>
+
+
+				<button id="register_submit" class="login_btn" type="submit">SIGN UP</button>
+
+				<span class="switch_text">Already have an account?<a class = 'switch_link' id="switch_to_login">Log In here!</a></span>
+			</form>
+
+
+			{% endif %}
+
+		</div>
+	</div>
+
+</body>
+</html>
