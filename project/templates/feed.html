@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/feed.css') }}">
+<script>
+	var empty_heart = "{{ url_for('static', filename='pictures/icons/heart.png') }}";
+	var full_heart = "{{ url_for('static', filename='pictures/icons/heart-filled.png') }}";
+</script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/post_actions.css') }}">
+
+<script type="text/javascript" src="{{url_for('static', filename='js/feed.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/post_actions.js')}}"></script>
+
+
+{% endblock %}
+
+{% block title %}Feed{% endblock %}
+
+{% block bottom_nav %}
+
+<div class="sort_menu_space">
+	<div class="sort_menu_item">
+		<div class="sort_text">Sort</div>
+		<select id="sort_options_list" class="options">
+			<option value="new">New</option>
+			<option value="top">Top</option>
+			<option value="alphabetical">A-Z</option>
+		</select>
+	</div>
+	<div class="sort_menu_item">
+		<div class="sort_text">Show</div>
+		<select id="show_options_list" class="options">
+			<option value="all">All</option>
+			<option value="with-art">With Art</option>
+			<option value="artless">Artless</option>
+		</select>
+	</div>
+
+	{% if filters["order"].lower() == "normal" %}
+		<img id="reverse_order" class="order_icon sort_icon"
+			src="{{url_for('static', filename='pictures/icons/arrow_up.png')}}" />
+	{% else %}
+		<img id="reverse_order" class="order_icon sort_icon"
+			src="{{url_for('static', filename='pictures/icons/arrow_down.png')}}" />
+	{% endif %}
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="feed">
+
+{% for post in posts %}
+
+	<div class="post_template" id="post_no_{{post.id}}">
+		<div class="post_title">
+			{{ post.title.upper() }}
+		</div>
+
+		<div class="post_preview ">{{ post.text }}</div>
+
+		<div class="post_date_separator"></div>
+
+		<div class="post_footer">
+		<div class="post_date">
+			posted on
+			{{ post.format_date() }}
+		</div>
+		<div class="post_relate">
+			<span class="like_count" id="like_number">{{ post.format_rating() }}</span>
+			{% if post.is_liked() %}
+			<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart-filled.png') }}"  />
+			{% else %}
+			<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart.png') }}"  />
+			{% endif %}
+		</div>
+		</div>
+   </div>
+
+{% endfor %}
+</div>
+<div class="featured">
+
+</div>
+{% endblock %}

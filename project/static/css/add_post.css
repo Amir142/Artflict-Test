@@ -1,0 +1,63 @@
+.add_page {
+	width: 50%;
+	height: 100%;
+}
+
+#add_post_form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+}
+
+.textbox {
+	color: white;
+	border: 0;
+	padding: 20px;
+	box-sizing: border-box;
+	background-color: rgba(0,0,0,0.85);
+}
+
+.textbox.title{
+	height: 10%;
+	font-size: 40px;
+	margin-bottom: 1px;
+}
+
+.textbox::placeholder {
+	font-weight: bold;
+}
+
+.textbox.text{
+	flex: 1;
+	font-size: 20px;
+	margin-bottom: 1px;
+	resize: none;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.textbox:focus {
+	outline: none;
+}
+
+.submit {
+	height: 10%;
+	color: gray;
+	font-size: 24px;
+	background-color: rgba(0,0,0,0.85);
+	border: none;
+}
+
+.submit:hover {
+	color: white;
+	cursor: pointer;
+}
+
+.submit:focus {
+	outline: none;
+}
+
+.warning::placeholder {
+	color: rgba(255,0,0,0.85);
+}

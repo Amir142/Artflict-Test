@@ -1,0 +1,154 @@
+
+* {
+  --nav-bg-color: rgba(0,0,0,0.85);
+  --custom-gray: rgba(128,128,128, 0.85);
+}
+
+.sort_menu_space {
+	display: flex;
+	flex-direction: row;
+	z-index: 2;
+	align-items: center;
+	width: 70%;
+	justify-content: center;
+	height: 100%;
+}
+
+.sort_menu_item{
+	display: flex;
+	position: relative;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	padding: 0 10px 0 20px;
+}
+
+.sort_menu_item::before{
+  content : "";
+  position: absolute;
+  left    : 0;
+  bottom  : 15%;
+  height  : 70%;
+  width   : 0;  /* or 100px */
+  border-left:1px solid var(--custom-gray);
+}
+
+.sort_text {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 10px;
+	color: gray;
+	height: 100%;
+}
+
+.options {
+	background-color: transparent;
+	color: lightgray;
+	border: none;
+}
+
+.options:hover {
+	cursor: pointer;
+}
+
+.options:focus {
+	outline: none;
+}
+
+option{
+	background-color:var(--nav-bg-color);
+}
+
+.order_icon {
+	max-height: 50%;
+	margin-left: 10px;
+}
+
+.order_icon:hover {
+	cursor: pointer;
+}
+
+
+/* PAGE */
+.featured {
+	flex: 1;
+	height: 100%;
+}
+
+.feed {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	height: 100%;
+	width: 70%;
+}
+
+.post_template{
+	background-color: rgba(0,0,0,0.85);
+    padding: 10px;
+    padding-bottom: 2px;
+    display: block;
+    color: white;
+    width: 95%;
+    height: auto;
+    border: 0;
+	box-shadow: 0 0 5px black;
+}
+
+.post_template:not(:first-of-type){
+    margin-top: 20px;
+}
+
+.post_template:hover {
+	cursor: pointer;
+}
+
+.post_template:first-of-type{
+    margin-top: 10px;
+}
+
+.post_template:last-of-type{
+    margin-bottom: 10px;
+}
+
+.post_title{
+    font-size: 36px;
+}
+
+.post_preview{
+	white-space: pre-line;
+    margin-bottom: 15px;
+    font-size: 16px;
+    height: auto;
+    width: 97%;
+    overflow: hidden;
+    display: -webkit-box;
+	word-break: break-all;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.post_relate {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.like_count {
+	margin-right: 5px;
+}
+
+.post_footer{
+	display: flex;
+    height: 35px;
+    display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.post_date_separator{
+    width: 20%;
+    border:0;
+    border-top: 1px solid;
+    border-color: #adadad;
+}

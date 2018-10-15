@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/add_post.css') }}">
+
+<script type="text/javascript" src="{{url_for('static', filename='js/add_post.js')}}"></script>
+
+
+{% endblock %}
+
+{% block title %}Add Post{% endblock %}
+
+{% block content %}
+<div class="add_page">
+
+	<form id="add_post_form" method="post">
+		{{ form.csrf_token }}
+		<input id="add_title" type="text" name="title" class="textbox title" placeholder="Title" />
+		<textarea id="add_text" class="textbox text" name="text" placeholder="Your story here" ></textarea>
+		<input type="button" id="submit_button" class="submit" value="SUBMIT" />
+
+	</form>
+
+</div>
+
+{% endblock %}

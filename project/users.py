@@ -15,14 +15,11 @@ users_bp = Blueprint('users', __name__)
 @users_bp.route('/register', methods=['POST', 'GET'])
 def register():
 	print(request)
-	print("register page <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>")
 	form = RegisterForm(request.form)
 	username = form.username.data
 	password = form.password.data
 	displayname = form.displayname.data
 	if request.method == 'POST':
-		print("reg submit ------------------------------------")
-
 		test_result = register_test(form)
 
 		if test_result == "success":
@@ -37,7 +34,6 @@ def register():
 			return render_template('login.html',form = form, data = data)
 	else:
 		logout_user()
-		print('opening register page ++++++++++++++++++++++++++++++')
 		data = {'show':'signup', 'err_msg':None}
 		return render_template('login.html',form = form, data = data)
 
@@ -83,7 +79,7 @@ def login():
 			return render_template('login.html', data = data, form = form)
 
 	else:
-		print("GET login <<<<<<<<<<<<<<<<<<<")
+		logout_user()
 		data = {'show':'login', 'err_msg':None}
 		return render_template('login.html', data = data, form = form)
 

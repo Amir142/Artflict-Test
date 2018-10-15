@@ -1,0 +1,13 @@
+.relate_button{
+   height: 100%;
+   width: 30px;
+   color: #4f4f4f;
+
+}
+.relate_button:focus{
+    outline: none;
+}
+
+.relate_button:hover {
+	cursor: pointer;
+}

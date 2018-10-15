@@ -22,10 +22,11 @@
 
 		<div class="login_modal_container">
 			<div class="imgcontainer">
-				<img src="static/pictures/logos/nlogo.png" alt="logo" id="logo">
+				<img src="static/pictures/logos/whitelogo-small.png" alt="logo" id="logo">
 			</div>
 
-			{% if not show or show == "login" %}
+			{% set show = data['show'] %}
+			{% if not show or show == 'login' %}
 
 			<form id="login_form" class="form_instance" action="{{ url_for('users.login') }}" method="post">
 				{{ form.csrf_token }}
@@ -42,12 +43,12 @@
 
 				<button id="login_submit" class="login_btn" type="submit">LOG IN</button>
 
-				<span class="switch_text">Don't Have An Account?<a class = 'switch_link' id="switch_to_signup"> Sign up here!</a></span>
+				<span class="switch_text">Don't Have An Account?&nbsp;<a class = 'switch_link' id="switch_to_signup">Sign up here!</a></span>
 
 
 			</form>
 
-			{% elif show == "signup" %}
+			{% elif show == 'signup' %}
 
 			<form id="signup_form" class="form_instance" action="{{ url_for('users.register') }}" method="post">
 				{{ form.csrf_token }}
@@ -78,7 +79,7 @@
 
 				<button id="register_submit" class="login_btn" type="submit">SIGN UP</button>
 
-				<span class="switch_text">Already have an account?<a class = 'switch_link' id="switch_to_login">Log In here!</a></span>
+				<span class="switch_text">Already have an account?&nbsp;<a class = 'switch_link' id="switch_to_login">Log In here!</a></span>
 			</form>
 
 

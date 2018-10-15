@@ -1,6 +1,7 @@
 body {
-	background-image: url("/static/pictures/backgrounds/loginbg.jpg");
+	background-image: url("/static/pictures/backgrounds/moment_of_creation.jpg") ;
 	margin: 0;
+	background-size:cover;
 }
 
 .login_page_body {
@@ -9,18 +10,28 @@ body {
 	justify-content: center;
 	height: 100vh;
 	width: 100%;
+	background-color: rgba(255, 255, 255, 0.4);
 }
 
 .login_modal_container {
 	height: auto;
-	width: 30%;
-	background-color: rgba(30, 0, 91, 0.8);
+	width: 20%;
+	background-color: rgba(0, 0, 0, 0.85);
 	padding: 30px;
 }
 
 #login_form {
 	display: grid;
 	grid-template-rows: auto auto auto auto;
+	grid-template-columns: auto;
+	grid-gap: 20px;
+	justify-content: center;
+	align-items: center;
+}
+
+#signup_form {
+	display: grid;
+	grid-template-rows: auto auto auto auto auto auto;
 	grid-template-columns: auto;
 	grid-gap: 20px;
 	justify-content: center;
@@ -36,30 +47,26 @@ body {
 	align-items: center;
 }
 
-button {
+.login_btn {
 	margin: 30px auto 20px auto;
 	height: 60px;
 	border: none;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: inherit;
+	width: auto;
+	color: lightgray;
 }
 
-#login_submit {
-	width: 100px;
-	color: gray;
-}
-
-#login_submit:hover {
+.login_btn:hover {
 	cursor: pointer;
 	color: white;
 }
 
-#login_submit:focus {
+.login_btn:focus {
 	outline: none;
 }
 
 #logo {
-	max-width: 60%;
-	flex: 1;
+	max-height: 80%;
 }
 
 .login_page_textbox {
@@ -71,6 +78,9 @@ button {
 	border-bottom: 2px solid lightgray;
 	display: block;
 	background-color: transparent;
+}
+.login_page_textbox::placeholder {
+	color: lightgray;
 }
 
 .login_page_textbox:hover {
@@ -88,11 +98,12 @@ button {
 
 .switch_text {
 	height: 10px;
-	color: gray;
+	color: lightgray;
 }
 
 .switch_link {
-	color: lightgray
+	color: lightgray;
+	text-decoration: underline;
 }
 
 .switch_link:hover {
@@ -101,6 +112,7 @@ button {
 }
 
 .error_message {
-	color: red;
+	color: rgb(240,0,0);
 	display: none;
+	opacity: inherit;
 }

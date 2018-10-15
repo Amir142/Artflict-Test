@@ -11,7 +11,9 @@ class User(UserMixin, db.Model):
 	username = db.Column(db.String, unique=True, nullable=False)
 	displayname = db.Column(db.String)
 	#email               = db.Column(db.String, unique=True, nullable=False)
-	bio = db.Column(db.String, default="Hi, i'm using Artflict!")
+	verified = db.Column(db.Boolean,default=False, nullable=False )
+	bio = db.Column(db.String, default="Hello, fellow ArtFlict users!")
+	creation_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
 	profile_pic_url = db.Column(db.String, nullable=True)
 	password_hash = db.Column(db.String, nullable=False)
 
@@ -27,12 +29,32 @@ class User(UserMixin, db.Model):
 		return check_password_hash(self.password_hash, password)
 
 	def get_followers(self):
-		get_followers = Follower.query.filte_by(followedID=self.id)
+		get_followers = Follower.query.filte_by(followedid=self.id)
 		return get_followers
 
 	def get_followed(self):
-		get_followed = Follower.query.filte_by(followerID=self.id)
+		get_followed = Follower.query.filte_by(followerid=self.id)
 		return get_followed
+
+	def format_creation_date(self):
+		age = "ArtFlict age: "
+		now = datetime.now()
+		creation = self.creation_date
+		span = (now - creation).days
+		if days < 1:
+			age += "less than a day"
+		elif days == 1:
+			age += "1 day"
+		elif days < 365:
+			age += days + " days"
+		else:
+			years = (days/365)
+			if years == 1:
+				age += "1 year"
+			else:
+				age += years + " years"
+		return age
+
 
 	def __repr__(self):
 		return 'User %d %s' % (self.id, self.username)
@@ -41,86 +63,105 @@ class User(UserMixin, db.Model):
 class Post(db.Model):
 	__tablename__ = 'posts'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	AuthorID = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-	ArtURL = db.Column(db.String)
-	ArtistID = db.Column(db.Integer, db.ForeignKey('users.id'))
-	Title = db.Column(db.String, nullable=False)
-	Text = db.Column(db.String, nullable=False)
-	Rating = db.Column(db.Integer)
-	Date = db.Column(db.String, nullable=False)
-	LinkDate = db.Column(db.String, nullable=True)
+	author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+	art_url = db.Column(db.String, nullable=True)
+	artist_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+	title = db.Column(db.String, nullable=False)
+	text = db.Column(db.String, nullable=False)
+	rating = db.Column(db.Integer, nullable=False)
+	creation_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
+	art_link_creation_date = db.Column(db.DateTime, nullable=True)
 
-	def __init__(self, AuthorID, Title, Text):
-		self.AuthorID = AuthorID
-		self.Title = Title
-		self.Text = Text
-		self.Date = self.format_date()
-		self.Rating = 0
+	def __init__(self, author_id, title, text):
+		self.author_id = author_id
+		self.title = title
+		self.text = text
+		self.rating = 0
+
+	def is_liked(self):
+		userid = current_user.id
+		getlike = Like.query.filter_by(userid=userid).filter_by(postid=self.id).first()
+		if getlike:
+			return True
+		return False
 
 	def relate(self):
 		userid = current_user.id
-		getpostlike = Like.query.filter_by(postID=self.id).filter_by(userID=userid).first()
+		getpostlike = Like.query.filter_by(postid=self.id).filter_by(userid=userid).first()
 		if getpostlike:
 			db.session.delete(getpostlike)
+			message = "like removed"
 		else:
 			add_like = Like(userid, self.id)
 			db.session.add(add_like)
+			message = "like added"
 		db.session.commit()
-		getlikes = Like.query.filter_by(postID=self.id).all()
-		self.Rating = len(getlikes)
+		getlikes = Like.query.filter_by(postid=self.id).count()
+		print(str(getlikes) + " LIKES")
+		self.rating = getlikes
+		db.session.commit()
+		response = '{ "message": "' + message + '", "likes": "' + str(getlikes) + '"}'
+		return response
 
-	def format_rating(self):
-		rating = float(self.Rating)
+	def link_art(self, art_url):
+		self.art_url = art_url
+		self.art_link_creation_date = datetime.now()
+
+	def format_rating (self):
+		rating = float(self.rating)
 		if rating < 1000:
-			return str(rating)
+			return str(int(rating))
 		elif rating < 1000000:
-			new_rating = round(rating / 1000, 1)
+			new_rating = str(round(rating / 1000, 1))
 			return new_rating + "K"
 		elif rating < 1000000000:
 			new_rating = round(rating / 1000000, 1)
 			return new_rating + "M"
 		else:
-			return "LOTS"
+			return "OVER A BILLION HOLY SHIT"
 
 	def format_date(self):
-		now = datetime.now()
+		now = self.creation_date
 		month_dict = {1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July',
 					  8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December'}
 		month = month_dict[now.month][:3]
-		day_suffix = {1: 'st', 2: 'nd'}
-		if now.day < 3:
-			day = str(now.day) + day_suffix[now.day]
+		day_suffix = {1: 'st', 2: 'nd', 3:'rd'}
+		last_digit = now.day % 10
+		if now.day == 11 or now.day ==12 or now.day == 13:
+			day_suffix = {1: 'th', 2: 'th', 3:'th'}
+		if last_digit% 10 < 3:
+			day = str(now.day) + day_suffix[last_digit]
 		else:
 			day = str(now.day) + 'th'
 		return month + " " + day + " " + str(now.year)
 
 	def __repr__(self):
-		return "post " + str(self.id) + " " + str(self.Title) + " " + str(self.Text)
+		return "post " + str(self.id) + " " + str(self.title) + " " + str(self.text)
 
 
 class Like(db.Model):
 	__tablename__ = 'likes'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	userID = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-	postID = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+	userid = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+	postid = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
 
-	def __init__(self, userID, postID):
-		self.userID = userID
-		self.postID = postID
+	def __init__(self, userid, postid):
+		self.userid = userid
+		self.postid = postid
 
 	def __repr__(self):
-		return "like " + str(self.id) + " " + str(self.userID) + " " + str(self.postID)
+		return "like " + str(self.id) + " " + str(self.userid) + " " + str(self.postid)
 
 
 class Follower(db.Model):
 	__tablename__ = 'followers'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	followerID = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-	followedID = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+	followerid = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+	followedid = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-	def __init__(self, followerID, followedID):
-		self.followerID = followerID
-		self.followedID = followedID
+	def __init__(self, followerid, followedid):
+		self.followerid = followerid
+		self.followedid = followedid
 
 	def __repr__(self):
-		return "like " + str(self.id) + " " + str(self.followerID) + " " + str(self.followedID)
+		return "like " + str(self.id) + " " + str(self.followerid) + " " + str(self.followedid)
