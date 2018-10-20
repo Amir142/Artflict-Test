@@ -50,7 +50,7 @@
 
 {% block content %}
 
-<div class="feed">
+<div id="feed_scroll" class="feed">
 
 {% for post in posts %}
 
@@ -64,18 +64,28 @@
 		<div class="post_date_separator"></div>
 
 		<div class="post_footer">
-		<div class="post_date">
-			posted on
-			{{ post.format_date() }}
-		</div>
-		<div class="post_relate">
-			<span class="like_count" id="like_number">{{ post.format_rating() }}</span>
-			{% if post.is_liked() %}
-			<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart-filled.png') }}"  />
-			{% else %}
-			<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart.png') }}"  />
+			<div class="post_date">
+				posted on
+				{{ post.format_date() }}
+			</div>
+
+			<div class="footer_space"></div>
+
+
+			{% if post.author_id == current_user.id %}
+			<div class="post_delete">
+				<img class="delete_button" id="delete_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/delete.png') }}" />
+			</div>
 			{% endif %}
-		</div>
+
+			<div class="post_relate">
+				<span class="like_count" id="like_number_{{post.id}}">{{ post.format_rating() }}</span>
+				{% if post.is_liked() %}
+				<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart-filled.png') }}"  />
+				{% else %}
+				<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart.png') }}"  />
+				{% endif %}
+			</div>
 		</div>
    </div>
 

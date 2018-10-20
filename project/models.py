@@ -36,24 +36,24 @@ class User(UserMixin, db.Model):
 		get_followed = Follower.query.filte_by(followerid=self.id)
 		return get_followed
 
-	def format_creation_date(self):
-		age = "ArtFlict age: "
-		now = datetime.now()
-		creation = self.creation_date
-		span = (now - creation).days
-		if days < 1:
-			age += "less than a day"
-		elif days == 1:
-			age += "1 day"
-		elif days < 365:
-			age += days + " days"
-		else:
-			years = (days/365)
-			if years == 1:
-				age += "1 year"
-			else:
-				age += years + " years"
-		return age
+	# def format_creation_date(self):
+	# 	age = "ArtFlict age: "
+	# 	now = datetime.now()
+	# 	creation = self.creation_date
+	# 	span = (now - creation).days
+	# 	if days < 1:
+	# 		age += "less than a day"
+	# 	elif days == 1:
+	# 		age += "1 day"
+	# 	elif days < 365:
+	# 		age += days + " days"
+	# 	else:
+	# 		years = (days/365)
+	# 		if years == 1:
+	# 			age += "1 year"
+	# 		else:
+	# 			age += years + " years"
+	# 	return age
 
 
 	def __repr__(self):
@@ -82,8 +82,15 @@ class Post(db.Model):
 		userid = current_user.id
 		getlike = Like.query.filter_by(userid=userid).filter_by(postid=self.id).first()
 		if getlike:
+			print(str(userid) + " likes " + str(self.id))
 			return True
 		return False
+
+	def delete(self):
+		 Like.query.filter_by(postid=self.id).delete()
+		 db.session.delete(self)
+		 db.session.commit()
+		 return "deleted " + str(id)
 
 	def relate(self):
 		userid = current_user.id
@@ -97,7 +104,6 @@ class Post(db.Model):
 			message = "like added"
 		db.session.commit()
 		getlikes = Like.query.filter_by(postid=self.id).count()
-		print(str(getlikes) + " LIKES")
 		self.rating = getlikes
 		db.session.commit()
 		response = '{ "message": "' + message + '", "likes": "' + str(getlikes) + '"}'
@@ -129,7 +135,7 @@ class Post(db.Model):
 		last_digit = now.day % 10
 		if now.day == 11 or now.day ==12 or now.day == 13:
 			day_suffix = {1: 'th', 2: 'th', 3:'th'}
-		if last_digit% 10 < 3:
+		if last_digit <= 3 and last_digit > 0:
 			day = str(now.day) + day_suffix[last_digit]
 		else:
 			day = str(now.day) + 'th'

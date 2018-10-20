@@ -1,11 +1,10 @@
+from . import app
 from flask import (
 	Blueprint, redirect, render_template,
 	Response, request, url_for, abort
 )
 from flask_login import login_required, current_user
-from urlparse import urlparse
 from project.models import User, Post, Like
-from . import app
 from project.forms import *
 from project import db
 
@@ -90,9 +89,17 @@ def profile(username):
 @app.route('/relate/<id>', methods=['POST'])
 @login_required
 def relate(id):
-	print(id)
 	post = Post.query.filter_by(id=id).first()
 	return post.relate()
+
+@app.route('/delete/<id>', methods=['POST'])
+@login_required
+def delete(id):
+	post = Post.query.filter_by(id=id).first()
+	if post.author_id == current_user.id:
+		return post.delete()
+	else:
+		return "action not allowed"
 
 @app.route('/add', methods=['GET','POST'])
 def add_post():
@@ -102,11 +109,11 @@ def add_post():
 	else:
 		title = form.title.data
 		text = form.text.data
-		print("adding title <<<<<<<<<<<<<< " + title + " text " + text)
 		post = Post(current_user.id, title, text)
 		db.session.add(post)
 		db.session.commit()
-		return url_for('feed')
+		post.relate()
+		return redirect(url_for('feed'))
 
 
 @app.route('/about')

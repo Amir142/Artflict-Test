@@ -20,6 +20,15 @@
 
 </head>
 <body>
+	<div class="modal_bg">
+		<div id="modal_content" class="modal">
+			<div id="delete_post_confirm_form">
+				<div class="modal_text" id="confirm_text">Are you sure you want to delete your post?</div>
+				<input type="button" id="delete_post_cancel" class="delete_form_button" value="Cancel" />
+				<input type="submit" id="delete_post_confirm" class="delete_form_button" value="Confirm" />
+			</div>
+		</div>
+	</div>
 	<div class="main_container">
 		<div class="navbar">
 			<img class="logo nav_item" alt="logo" src="{{ url_for('static', filename='pictures/logos/whitelogo-small.png') }}" />
@@ -27,11 +36,11 @@
 
 			</div>
 			<div class="menu nav_item">
-				<img class="menu_item" id="home" alt="home" src="{{ url_for('static', filename='pictures/icons/home_doorless_white.png') }}" />
-				<img class="menu_item" id="inbox" alt="inbox" src="{{ url_for('static', filename='pictures/icons/envelope.png') }}" />
-				<img class="menu_item" id="profile" alt="home" src="{{ url_for('static', filename='pictures/icons/profile.png') }}" />
-				<img class="menu_item" id="add_post" alt="edit" src="{{ url_for('static', filename='pictures/icons/edit_white.png') }}" />
-
+				<img class="menu_item" id="log_out" alt="logout" title="Log Out" src="{{ url_for('static', filename='pictures/icons/sign_out.png') }}" />
+				<img class="menu_item" id="home" alt="home" title="Home" src="{{ url_for('static', filename='pictures/icons/home_doorless_white.png') }}" />
+				<img class="menu_item" id="inbox" alt="inbox" title="Inbox" src="{{ url_for('static', filename='pictures/icons/inbox.png') }}" />
+				<img class="menu_item" id="profile" alt="home" title="Profile" src="{{ url_for('static', filename='pictures/icons/profile.png') }}" />
+				<img class="menu_item" id="add_post" alt="edit" title="Create Post" src="{{ url_for('static', filename='pictures/icons/edit_white.png') }}" />
 			</div>
 		</div>
 		<div class="bottom_navbar">

@@ -30,18 +30,5 @@ function validate_post(){
 		post = false;
 	};
 
-	if(post){
-		$.ajax({
-			type: 'POST',
-			url: '/add',
-			data: $("#add_post_form").serialize(),
-			success: function(data){
-				console.log(data);
-				window.location.href = data;
-			},
-			error: function(response){
-				console.log(response);
-			}
-		});
-	}
+	return post;
 };

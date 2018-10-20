@@ -1,24 +1,28 @@
 
 
 var urlParams = new URLSearchParams(window.location.search);
-var sort_list = {"new": "New","top":"Top","alphabetical":"A-Z"};
-var show_list = {"all":"All","artless":"Artless","with-art":"With Art"};
 
 $(document).ready(function(){
 
-	select_dropdown_options();
-
 	$("select#sort_options_list").on("change", function(){
 		let key = $("select#sort_options_list").val();
-		console.log(key);
 		urlParams.set("sort_by", key);
 		window.location.search = urlParams.toString();
 	});
 
 	$("select#show_options_list").on("change", function(){
 		let key = $("select#show_options_list").val();
-		console.log(key);
 		urlParams.set("show", key);
+		window.location.search = urlParams.toString();
+	});
+
+	$("#reverse_order").on("click", function(){
+		if(urlParams.get("order") == "normal"){
+			urlParams.set("order", "reverse");
+		}
+		else if(urlParams.get("order") == "reverse"){
+			urlParams.set("order", "normal");
+		}
 		window.location.search = urlParams.toString();
 	});
 
@@ -26,12 +30,16 @@ $(document).ready(function(){
 
 		let template = get_template(e.target);
 		let id = template.id.substring(8);
+		let classes = e.target.className;
 
-		if(!e.target.className.includes("relate_button"))
+		if(!(classes.includes("relate_button") || classes.includes("delete_button")))
 		{
 			window.location.href = "/stories/" + id;
 		}
 	});
+
+	select_dropdown_options();
+
 });
 
 
@@ -52,10 +60,13 @@ function select_dropdown_options(){
 		urlParams.append("show", "all");
 	}
 
+	if(!urlParams.has("order")){
+		urlParams.append("order", "normal");
+	}
+
 	let sort_by = urlParams.get("sort_by");
 	let show = urlParams.get("show");
-	console.log(sort_list[sort_by]);
-	$("select#sort_options_list").val(sort_list[sort_by].toString());
-	$("select#show_options_list").val(show_list[show].toString());
+	$("select#sort_options_list").val(sort_by);
+	$("select#show_options_list").val(show);
 
 };

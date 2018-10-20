@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/add_post.css') }}">
 
 <script type="text/javascript" src="{{url_for('static', filename='js/add_post.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/post_actions.js')}}"></script>
 
 
 {% endblock %}
@@ -14,11 +15,11 @@
 {% block content %}
 <div class="add_page">
 
-	<form id="add_post_form" method="post">
+	<form id="add_post_form" method="post" onsubmit="return validate_post()" action="/add">
 		{{ form.csrf_token }}
 		<input id="add_title" type="text" name="title" class="textbox title" placeholder="Title" />
 		<textarea id="add_text" class="textbox text" name="text" placeholder="Your story here" ></textarea>
-		<input type="button" id="submit_button" class="submit" value="SUBMIT" />
+		<input type="submit" id="submit_button" class="submit" value="SUBMIT" />
 
 	</form>
 
