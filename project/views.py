@@ -1,3 +1,4 @@
+from . import app
 from flask import (
 	Blueprint, redirect, render_template,
 	Response, request, url_for, abort
@@ -5,7 +6,6 @@ from flask import (
 from flask_login import login_required, current_user
 from urllib.parse import urlparse
 from project.models import User, Post, Like
-from . import app
 from project.forms import *
 from project import db
 
@@ -54,6 +54,9 @@ def feed():
 		else:
 			posts = Post.query.order_by(Post.creation_date.asc())
 
+	else:
+		return "what"
+
 	if show == "with-art":
 		posts = posts.filter(Post.art_url != None)
 	elif show == "artless":
@@ -89,9 +92,17 @@ def profile(username):
 @app.route('/relate/<id>', methods=['POST'])
 @login_required
 def relate(id):
-	print(id)
 	post = Post.query.filter_by(id=id).first()
 	return post.relate()
+
+@app.route('/delete/<id>', methods=['POST'])
+@login_required
+def delete(id):
+	post = Post.query.filter_by(id=id).first()
+	if post.author_id == current_user.id or current_user.is_admin:
+		return post.delete()
+	else:
+		return "action not allowed"
 
 @app.route('/add', methods=['GET','POST'])
 def add_post():
@@ -101,11 +112,10 @@ def add_post():
 	else:
 		title = form.title.data
 		text = form.text.data
-		print("adding title <<<<<<<<<<<<<< " + title + " text " + text)
 		post = Post(current_user.id, title, text)
 		db.session.add(post)
 		db.session.commit()
-		return url_for('feed')
+		return redirect(url_for('feed'))
 
 
 @app.route('/about')
@@ -120,7 +130,6 @@ def list_detail_stories(post_id):
 	form = AddArtForm(request.form)
 	if request.method == "GET":
 		post = Post.query.filter_by(id=post_id).first()
-		if post.art_url:
-			return render_template('story-view-with-art.html', post=post)
-		else:
-			return render_template('story-view-no-art.html', post=post)
+		return render_template('story-view.html', post=post)
+	else:
+		pass

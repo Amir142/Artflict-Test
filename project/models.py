@@ -11,7 +11,7 @@ class User(UserMixin, db.Model):
 	username = db.Column(db.String, unique=True, nullable=False)
 	displayname = db.Column(db.String)
 	#email               = db.Column(db.String, unique=True, nullable=False)
-	verified = db.Column(db.Boolean,default=False, nullable=False )
+	is_admin = db.Column(db.Boolean,default=False, nullable=False )
 	bio = db.Column(db.String, default="Hello, fellow ArtFlict users!")
 	creation_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
 	profile_pic_url = db.Column(db.String, nullable=True) 
@@ -36,24 +36,24 @@ class User(UserMixin, db.Model):
 		get_followed = Follower.query.filte_by(followerid=self.id)
 		return get_followed
 
-	def format_creation_date(self):
-		age = "ArtFlict age: "
-		now = datetime.now()
-		creation = self.creation_date
-		span = (now - creation).days
-		if days < 1:
-			age += "less than a day"
-		elif days == 1:
-			age += "1 day"
-		elif days < 365:
-			age += days + " days"
-		else:
-			years = (days/365)
-			if years == 1:
-				age += "1 year"
-			else:
-				age += years + " years"
-		return age
+	# def format_creation_date(self):
+	# 	age = "ArtFlict age: "
+	# 	now = datetime.now()
+	# 	creation = self.creation_date
+	# 	span = (now - creation).days
+	# 	if days < 1:
+	# 		age += "less than a day"
+	# 	elif days == 1:
+	# 		age += "1 day"
+	# 	elif days < 365:
+	# 		age += days + " days"
+	# 	else:
+	# 		years = (days/365)
+	# 		if years == 1:
+	# 			age += "1 year"
+	# 		else:
+	# 			age += years + " years"
+	# 	return age
 
 
 	def __repr__(self):
@@ -82,8 +82,15 @@ class Post(db.Model):
 		userid = current_user.id
 		getlike = Like.query.filter_by(userid=userid).filter_by(postid=self.id).first()
 		if getlike:
+			print(str(userid) + " likes " + str(self.id))
 			return True
 		return False
+
+	def delete(self):
+		 Like.query.filter_by(postid=self.id).delete()
+		 db.session.delete(self)
+		 db.session.commit()
+		 return "deleted " + str(id)
 
 	def relate(self):
 		userid = current_user.id
@@ -97,7 +104,6 @@ class Post(db.Model):
 			message = "like added"
 		db.session.commit()
 		getlikes = Like.query.filter_by(postid=self.id).count()
-		print(str(getlikes) + " LIKES")
 		self.rating = getlikes
 		db.session.commit()
 		response = '{ "message": "' + message + '", "likes": "' + str(getlikes) + '"}'
@@ -122,6 +128,7 @@ class Post(db.Model):
 
 	def format_date(self):
 		now = self.creation_date
+		print(self.title + " -->>> " + str(now))
 		month_dict = {1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July',
 					  8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December'}
 		month = month_dict[now.month][:3]
@@ -129,7 +136,7 @@ class Post(db.Model):
 		last_digit = now.day % 10
 		if now.day == 11 or now.day ==12 or now.day == 13:
 			day_suffix = {1: 'th', 2: 'th', 3:'th'}
-		if last_digit% 10 < 3:
+		if last_digit <= 3 and last_digit > 0:
 			day = str(now.day) + day_suffix[last_digit]
 		else:
 			day = str(now.day) + 'th'

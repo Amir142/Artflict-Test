@@ -2,6 +2,7 @@
 * {
   --nav-bg-color: rgba(0,0,0,0.85);
   --custom-gray: rgba(128,128,128, 0.85);
+  --page-width: 100%;
 }
 
 body {
@@ -9,18 +10,69 @@ body {
 	padding: 0;
 	background-image: url("/static/pictures/backgrounds/moment_of_creation.jpg") ;
 	background-size: cover;
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
 }
 
-.main_container {
+/* MODALS */
+
+.modal_bg {
+	position: fixed;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100%;
+	z-index: 2;
 	background-color: rgba(255, 255, 255, 0.4);
+}
+
+.modal {
+	text-align: center;
+	padding: 50px;
+	background-color:var(--nav-bg-color);
+	color: white;
+	font-size: 24px;
+}
+
+#delete_post_confirm_form {
+	display: grid;
+	grid-row-gap: 30px;
+	grid-template-rows: 70px 50px;
+	grid-template-columns: 50% 50%;	
+}
+
+.modal_text#confirm_text {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-column: span 2;
+}
+
+.delete_form_button {
+	height: 100%;
+	border: none;
+	background-color: transparent;
+	width: auto;
+	color: lightgray;
+}
+
+.delete_form_button:hover {
+	cursor: pointer;
+	color: white;
+}
+
+.delete_form_button:focus {
+	outline: none;
+}
+
+/* CONTENT */
+
+.page_layout {
+	background-color: transparent;
 	box-sizing: border-box;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	flex: 1;
+	height: 100vh;
 }
 
 .footer {
@@ -49,10 +101,27 @@ body {
 	cursor: pointer;
 }
 
+.main_content {
+	display: flex;
+	flex: 1;
+	background-color: rgba(255, 255, 255, 0.4);
+	flex-direction: row;
+}
+
 .content_block {
+	width: 70%;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding: 20px;
+	align-items: center;
+	justify-content: center;
+}
+
+.side_panel_block {
 	flex: 1;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	box-sizing: border-box;
 	padding: 20px;
 	align-items: center;

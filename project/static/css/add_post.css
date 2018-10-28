@@ -1,5 +1,5 @@
 .add_page {
-	width: 50%;
+	width: var(--page-width);
 	height: 100%;
 }
 
@@ -15,7 +15,7 @@
 	border: 0;
 	padding: 20px;
 	box-sizing: border-box;
-	background-color: rgba(0,0,0,0.85);
+	background-color: var(--nav-bg-color);
 }
 
 .textbox.title{
