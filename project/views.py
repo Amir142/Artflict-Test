@@ -3,12 +3,11 @@ from flask import (
 	Response, request, url_for, abort
 )
 from flask_login import login_required, current_user
-from urlparse import urlparse
+from urllib.parse import urlparse
 from project.models import User, Post, Like
 from . import app
 from project.forms import *
 from project import db
-
 
 @app.route('/') #default
 def landingpage():

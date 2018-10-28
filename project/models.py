@@ -14,7 +14,7 @@ class User(UserMixin, db.Model):
 	verified = db.Column(db.Boolean,default=False, nullable=False )
 	bio = db.Column(db.String, default="Hello, fellow ArtFlict users!")
 	creation_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
-	profile_pic_url = db.Column(db.String, nullable=True)
+	profile_pic_url = db.Column(db.String, nullable=True) 
 	password_hash = db.Column(db.String, nullable=False)
 
 	def __init__(self, username, displayname, password):
