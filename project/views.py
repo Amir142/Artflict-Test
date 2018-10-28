@@ -54,6 +54,9 @@ def feed():
 		else:
 			posts = Post.query.order_by(Post.creation_date.asc())
 
+	else:
+		return "what"
+
 	if show == "with-art":
 		posts = posts.filter(Post.art_url != None)
 	elif show == "artless":
@@ -96,7 +99,7 @@ def relate(id):
 @login_required
 def delete(id):
 	post = Post.query.filter_by(id=id).first()
-	if post.author_id == current_user.id:
+	if post.author_id == current_user.id or current_user.is_admin:
 		return post.delete()
 	else:
 		return "action not allowed"
@@ -112,7 +115,6 @@ def add_post():
 		post = Post(current_user.id, title, text)
 		db.session.add(post)
 		db.session.commit()
-		post.relate()
 		return redirect(url_for('feed'))
 
 
@@ -128,7 +130,6 @@ def list_detail_stories(post_id):
 	form = AddArtForm(request.form)
 	if request.method == "GET":
 		post = Post.query.filter_by(id=post_id).first()
-		if post.art_url:
-			return render_template('story-view-with-art.html', post=post)
-		else:
-			return render_template('story-view-no-art.html', post=post)
+		return render_template('story-view.html', post=post)
+	else:
+		pass

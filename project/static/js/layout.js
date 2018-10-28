@@ -24,7 +24,6 @@ $(document).ready(function(){
 
 function close_modals(){
 	$(".modal_bg").css("display", "none");
-	$(".modal").css("display", "none");
 }
 
 function open_modal(id){

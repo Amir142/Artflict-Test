@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/post_actions.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/story-view.css') }}" />
+
+<script>
+	var empty_heart = "{{ url_for('static', filename='pictures/icons/heart.png') }}";
+	var full_heart = "{{ url_for('static', filename='pictures/icons/heart-filled.png') }}";
+</script>
+<script type="text/javascript" src="{{url_for('static', filename='js/post_actions.js')}}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="view_page">
+
+	<div class="textbox title">{{post.title.upper()}}</div>
+	<div class="textbox bottom_container">
+		<textarea disabled class="text">{{post.text}}</textarea>
+
+		<div class="date_separator"></div>
+
+		<div class="post_footer">
+			<div class="post_date">
+				posted on {{ post.format_date() }}
+			</div>
+
+			<div class="footer_space"></div>
+
+			{% if post.author_id == current_user.id or current_user.is_admin %}
+			<div class="post_delete">
+				<img class="delete_button" id="delete_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/delete.png') }}" />
+			</div>
+			{% endif %}
+
+			<div class="post_relate">
+				<span class="like_count" id="like_number_{{post.id}}">{{ post.format_rating() }}</span>
+				{% if post.is_liked() %}
+				<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart-filled.png') }}"  />
+				{% else %}
+				<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart.png') }}"  />
+				{% endif %}
+			</div>
+
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
+
+{% block side_panel %}
+
+<div id="side_panel" class="story_art">
+
+</div>
+
+{% endblock %}

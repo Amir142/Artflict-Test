@@ -11,7 +11,7 @@ class User(UserMixin, db.Model):
 	username = db.Column(db.String, unique=True, nullable=False)
 	displayname = db.Column(db.String)
 	#email               = db.Column(db.String, unique=True, nullable=False)
-	verified = db.Column(db.Boolean,default=False, nullable=False )
+	is_admin = db.Column(db.Boolean,default=False, nullable=False )
 	bio = db.Column(db.String, default="Hello, fellow ArtFlict users!")
 	creation_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
 	profile_pic_url = db.Column(db.String, nullable=True)
@@ -128,6 +128,7 @@ class Post(db.Model):
 
 	def format_date(self):
 		now = self.creation_date
+		print(self.title + " -->>> " + str(now))
 		month_dict = {1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July',
 					  8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December'}
 		month = month_dict[now.month][:3]

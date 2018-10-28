@@ -3,7 +3,6 @@
 var urlParams = new URLSearchParams(window.location.search);
 
 $(document).ready(function(){
-
 	$("select#sort_options_list").on("change", function(){
 		let key = $("select#sort_options_list").val();
 		urlParams.set("sort_by", key);

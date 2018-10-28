@@ -1,9 +1,4 @@
 
-* {
-  --nav-bg-color: rgba(0,0,0,0.85);
-  --custom-gray: rgba(128,128,128, 0.85);
-}
-
 .sort_menu_space {
 	display: flex;
 	flex-direction: row;
@@ -80,13 +75,13 @@ option{
 	overflow-y: scroll;
 	overflow-x: hidden;
 	height: 100%;
-	width: 70%;
+	width: var(--page-width);
 }
 
 .post_template{
 	background-color: rgba(0,0,0,0.85);
     padding: 10px;
-    padding-bottom: 2px;
+    padding-bottom: 0;
     display: block;
     color: white;
     width: 95%;
@@ -101,14 +96,6 @@ option{
 
 .post_template:hover {
 	cursor: pointer;
-}
-
-.post_template:first-of-type{
-    margin-top: 10px;
-}
-
-.post_template:last-of-type{
-    margin-bottom: 10px;
 }
 
 .post_title{
@@ -139,10 +126,10 @@ option{
 }
 
 .post_footer{
-	padding: 2px;
+	padding: 10px 0 10px 0;
 	box-sizing: border-box;
 	display: flex;
-	height: 35px;
+	height: 50px;
 	width: 100%;
     display: flex;
 	align-items: center;

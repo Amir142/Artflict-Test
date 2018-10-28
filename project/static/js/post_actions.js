@@ -41,6 +41,8 @@ function delete_post(id){
 		type: "POST",
 		url: '/delete/' + id.toString()
 	});
+
+	window.locaiton = "/feed";
 }
 
 function relate(id){
