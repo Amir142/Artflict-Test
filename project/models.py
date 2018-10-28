@@ -1,8 +1,10 @@
-from project import db
 from datetime import datetime
-from sqlalchemy import and_, or_
+
 from flask_login import UserMixin, current_user
+from sqlalchemy import and_, or_
 from werkzeug.security import check_password_hash, generate_password_hash
+
+from project import db
 
 
 class User(UserMixin, db.Model):

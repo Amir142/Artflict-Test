@@ -1,13 +1,15 @@
-from . import app
-from flask import (
-	Blueprint, redirect, render_template,
-	Response, request, url_for, abort
-)
-from flask_login import login_required, current_user
 from urllib.parse import urlparse
-from project.models import User, Post, Like
-from project.forms import *
+
+from flask import (Blueprint, Response, abort, redirect, render_template,
+                   request, url_for)
+from flask_login import current_user, login_required
+
 from project import db
+from project.forms import *
+from project.models import Like, Post, User
+
+from . import app
+
 
 @app.route('/') #default
 def landingpage():
