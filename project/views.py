@@ -1,3 +1,4 @@
+import os
 from urllib.parse import urlparse
 
 from flask import (Blueprint, Response, abort, redirect, render_template,
@@ -88,21 +89,26 @@ def profile(username):
 		print("visited user")
 		return render_template('profile.html', visited_user=visited_user)
 	else:
-		return abort(404)
+		abort(404)
 
 
-@app.route('/relate/<id>', methods=['POST'])
+@app.route('/relate/<int:id>', methods=['POST'])
 @login_required
 def relate(id):
 	post = Post.query.filter_by(id=id).first()
 	return post.relate()
 
-@app.route('/delete/<id>', methods=['POST'])
+@app.route('/delete/<int:id>', methods=['POST'])
 @login_required
 def delete(id):
 	post = Post.query.filter_by(id=id).first()
+	id = post.id
 	if post.author_id == current_user.id or current_user.is_admin:
-		return post.delete()
+		Like.query.filter_by(postid=post.id).delete()
+		db.session.delete(post)
+		db.session.commit()
+		print("deleted --> " + str(id))
+		return redirect("/feed")
 	else:
 		return "action not allowed"
 
@@ -135,3 +141,36 @@ def list_detail_stories(post_id):
 		return render_template('story-view.html', post=post)
 	else:
 		pass
+
+
+@app.route('/illustrate/<int:post_id>', methods=['POST'])
+@login_required
+def illustrate(post_id):
+	pass
+	# folder_name = request.form['superhero']
+
+	# target = os.path.join(app.config["APP_ROUTE"], 'files/{}'.format(folder_name))
+	# print(target)
+
+	# if not os.path.isdir(target):
+	# 	os.mkdir(target)
+
+	# print(request.files["file"])
+
+	# for upload in request.files["file"]:
+	# 	print(upload)
+	# 	print("{} is the file name".format(upload.filename))
+	# 	filename = upload.filename
+	# 	# This is to verify files are supported
+	# 	ext = os.path.splitext(filename)[1]
+	# 	if (ext == ".jpg") or (ext == ".png"):
+	# 		print("File supported moving on...")
+	# 	else:
+	# 		render_template("Error.html", message="Files uploaded are not supported...")
+	# 	destination = "/".join([target, filename])
+	# 	print("Accept incoming file:", filename)
+	# 	print("Save it to:", destination)
+	# 	upload.save(destination)
+
+	# # return send_from_directory("images", filename, as_attachment=True)
+	# return render_template("complete.html", image_name=filename)

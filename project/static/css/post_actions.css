@@ -1,13 +1,72 @@
-.relate_button{
-   height: 100%;
-   width: 30px;
-   color: #4f4f4f;
 
+.post_footer {
+	padding: 10px 0 10px 0;
+	box-sizing: border-box;
+	display: flex;
+	height: 50px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 }
-.relate_button:focus{
+
+.post_footer div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	height: 100%;
+}
+
+.post_footer div img {
+	max-height: 100%;
+	max-width: 100%;
+	height: auto;
+	width: auto;
+}
+
+.post_date_separator {
+	width: 20%;
+	border: 0;
+	border-top: 1px solid;
+	border-color: #adadad;
+}
+
+.footer_space {
+	flex-grow: 1;
+}
+.post_icon{
+    height: 100%;
+    width: 30px; 
+ }
+
+.post_icon:focus{
     outline: none;
 }
 
-.relate_button:hover {
-	cursor: pointer;
+.post_icon:hover {
+    cursor: pointer;
+}
+
+.like_count {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 5px;
+    width: 5ch;
+}
+
+.delete_button {
+    margin: 0 10px 0 10px;
+}
+
+.illustrate_button {
+    margin-right: 20px;
+}
+
+.post_relate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

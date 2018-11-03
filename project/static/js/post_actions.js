@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 
-	$(".delete_button").on("click", function(e){
+	$(".delete_button").on("click", function(e){		
 		let id = e.target.id.substring(10);
 
 		open_modal("confirm_delete_modal");
@@ -12,13 +12,29 @@ $(document).ready(function(){
 	
 		$("#delete_post_confirm").on("click", function(e){
 			delete_post(id);
-			close_modals();
 		});
+
 	});
 
 	$(".relate_button").on("click", function(e){
 		let id = e.target.id.substring(10);
 		relate(id);
+	});
+
+	$(".illustrate_button").on("click", function(e){
+
+		let id = e.target.id.substring(14);
+
+		open_modal("upload_art_modal");
+
+		$("#delete_post_cancel").on("click", function(e){
+			close_modals();
+		});
+	
+		$("#delete_post_confirm").on("click", function(e){
+			delete_post(id);
+		});
+
 	});
 	
 });
@@ -33,16 +49,24 @@ function set_relate_color(like, is_liked){
 };
 
 function delete_post(id){
-	console.log("delete " + id.toString());
+	console.log("delete " + id);
 	
-	$("#post_no_" + id.toString()).css("display", "none");
-
 	$.ajax({
 		type: "POST",
-		url: '/delete/' + id.toString()
+		url: '/delete/' + id,
+		success: function(){			
+			if(window.location.includes("feed"))
+			{
+				window.location.reload();
+			}
+			else{
+				window.location = "/feed";
+			}
+		},
+		error: function(response){
+			console.log(response);
+		}
 	});
-
-	window.locaiton = "/feed";
 }
 
 function relate(id){
@@ -50,7 +74,7 @@ function relate(id){
 
     $.ajax({
 		type: "POST",
-		url: '/relate/' + id.toString(),
+		url: '/relate/' + id,
 		success: function(response){
 			response = JSON.parse(response);
 		  	message = response.message;
@@ -62,7 +86,7 @@ function relate(id){
 			  set_relate_color(button, "no");
 			}
 
-			$("#like_number_" + id.toString()).text(response.likes);
+			$("#like_number_" + id).text(response.likes);
 
 	    },
 		error: function(response){

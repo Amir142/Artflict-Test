@@ -18,9 +18,9 @@
 
 	<div class="textbox title">{{post.title.upper()}}</div>
 	<div class="textbox bottom_container">
-		<textarea disabled class="text">{{post.text}}</textarea>
+		<textarea readonly class="text">{{post.text}}</textarea>
 
-		<div class="date_separator"></div>
+		<div class="post_date_separator"></div>
 
 		<div class="post_footer">
 			<div class="post_date">
@@ -29,18 +29,18 @@
 
 			<div class="footer_space"></div>
 
+			<img class="illustrate_button post_icon" title="Illustrate" id="illustrate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/illustrate.png') }}"/>
+
 			{% if post.author_id == current_user.id or current_user.is_admin %}
-			<div class="post_delete">
-				<img class="delete_button" id="delete_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/delete.png') }}" />
-			</div>
+			<img class="delete_button post_icon" title="Delete" id="delete_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/delete.png') }}"/>
 			{% endif %}
 
 			<div class="post_relate">
 				<span class="like_count" id="like_number_{{post.id}}">{{ post.format_rating() }}</span>
 				{% if post.is_liked() %}
-				<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart-filled.png') }}"  />
+				<img class="relate_button post_icon" title="Like" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart-filled.png') }}"  />
 				{% else %}
-				<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart.png') }}"  />
+				<img class="relate_button post_icon" title="Like" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart.png') }}"  />
 				{% endif %}
 			</div>
 
@@ -53,8 +53,19 @@
 
 {% block side_panel %}
 
-<div id="side_panel" class="story_art">
+<div class="side_panel_title textbox title">
+	Gallery
+</div>
+<div id="side_panel" class="art_space textbox bottom_container">
+	{% if not post.art_url or post.art_url == "" %}
 
+		<img id="post_{{ post.id }}_art" class="art" alt="art" src="{{ url_for('static', filename='pictures/icons/missing_art.png') }}">
+
+	{% else %}
+
+	<img id="post_{{ post.id }}_art" class="art" alt="art" src="{{ url_for('static', filename='pictures/missing_art.jpg') }}">
+
+	{% endif %}
 </div>
 
 {% endblock %}

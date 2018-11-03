@@ -26,7 +26,6 @@ $(document).ready(function(){
 	});
 
 	$(".post_template").on("click",function(e){
-
 		let template = get_template(e.target);
 		let id = template.id.substring(8);
 		let classes = e.target.className;

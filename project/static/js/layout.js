@@ -1,6 +1,8 @@
 
 $(document).ready(function(){
 
+	close_modals();
+
 	$(".menu_item#home").on("click", function(){
 		window.location = "/feed";
 	});
@@ -23,7 +25,10 @@ $(document).ready(function(){
 });
 
 function close_modals(){
+	$(".modal").css("display", "none");
 	$(".modal_bg").css("display", "none");
+	$("#delete_post_confirm_form")[0].reset();
+	$("#upload_art_form")[0].reset();
 }
 
 function open_modal(id){

@@ -71,13 +71,14 @@ class Post(db.Model):
 	title = db.Column(db.String, nullable=False)
 	text = db.Column(db.String, nullable=False)
 	rating = db.Column(db.Integer, nullable=False)
-	creation_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
+	creation_date = db.Column(db.DateTime, nullable=False)
 	art_link_creation_date = db.Column(db.DateTime, nullable=True)
 
 	def __init__(self, author_id, title, text):
 		self.author_id = author_id
 		self.title = title
 		self.text = text
+		self.creation_date = datetime.now()
 		self.rating = 0
 
 	def is_liked(self):
@@ -87,12 +88,6 @@ class Post(db.Model):
 			print(str(userid) + " likes " + str(self.id))
 			return True
 		return False
-
-	def delete(self):
-		 Like.query.filter_by(postid=self.id).delete()
-		 db.session.delete(self)
-		 db.session.commit()
-		 return "deleted " + str(id)
 
 	def relate(self):
 		userid = current_user.id

@@ -5,6 +5,10 @@
   --page-width: 100%;
 }
 
+img {
+	max-height: 100%;
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -47,7 +51,7 @@ body {
 	grid-column: span 2;
 }
 
-.delete_form_button {
+.modal_form_button {
 	height: 100%;
 	border: none;
 	background-color: transparent;
@@ -55,12 +59,12 @@ body {
 	color: lightgray;
 }
 
-.delete_form_button:hover {
+.modal_form_button:hover {
 	cursor: pointer;
 	color: white;
 }
 
-.delete_form_button:focus {
+.modal_form_button:focus {
 	outline: none;
 }
 
@@ -102,6 +106,7 @@ body {
 }
 
 .main_content {
+	padding: 20px;
 	display: flex;
 	flex: 1;
 	background-color: rgba(255, 255, 255, 0.4);
@@ -109,11 +114,11 @@ body {
 }
 
 .content_block {
+	margin-right: 1px;
 	width: 70%;
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
-	padding: 20px;
 	align-items: center;
 	justify-content: center;
 }
@@ -123,7 +128,6 @@ body {
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
-	padding: 20px;
 	align-items: center;
 	justify-content: center;
 }
@@ -132,6 +136,7 @@ body {
 	background-color: var(--nav-bg-color);
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 	width: 100%;
 	height: 60px;
 	box-sizing: border-box;
@@ -141,6 +146,7 @@ body {
 
 .nav_item {
 	/* border: 1px solid black; */
+	color: white;
 	height: 100%;
 	display: flex;
 	align-items: center;
@@ -148,6 +154,10 @@ body {
 
 .nav_item.space {
 	flex-grow: 1;
+}
+
+.nav_item.admin_block {
+	margin-left: 30px;
 }
 
 .menu {
@@ -181,18 +191,29 @@ body {
 }
 
 /* SCROLL BAR */
-div::-webkit-scrollbar-track
-{
+div::-webkit-scrollbar-track{
 	background-color: rgba(0,0,0,0.2);
 }
 
-div::-webkit-scrollbar
-{
+div::-webkit-scrollbar{
 	width: 12px;
 	background-color: transparent;
 }
 
-div::-webkit-scrollbar-thumb
-{
+div::-webkit-scrollbar-thumb{
 	background-color: rgba(0,0,0,0.65);
+}
+
+/* TEXTAREA SCROLL */
+textarea::-webkit-scrollbar-track{
+	background-color: rgba(0,0,0,0.5);
+}
+
+textarea::-webkit-scrollbar{
+	width: 12px;
+	background-color: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb{
+	background-color: rgba(255,255,255,0.2);
 }

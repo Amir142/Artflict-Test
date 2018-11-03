@@ -59,7 +59,11 @@
 			{{ post.title.upper() }}
 		</div>
 
-		<div class="post_preview ">{{ post.text }}</div>
+		{% if post.art_url %}
+		<img class="post_art" id="art_no_{{post.id}}" src="{{post.art_url}}">
+		{% endif %}
+		
+		<div class="post_preview">{{ post.text }}</div>
 
 		<div class="post_date_separator"></div>
 
@@ -72,17 +76,15 @@
 
 
 			{% if post.author_id == current_user.id or current_user.is_admin %}
-			<div class="post_delete">
-				<img class="delete_button" id="delete_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/delete.png') }}" />
-			</div>
+			<img class="delete_button post_icon" id="delete_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/delete.png') }}" />
 			{% endif %}
 
 			<div class="post_relate">
 				<span class="like_count" id="like_number_{{post.id}}">{{ post.format_rating() }}</span>
 				{% if post.is_liked() %}
-				<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart-filled.png') }}"  />
+				<img class="relate_button post_icon" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart-filled.png') }}"  />
 				{% else %}
-				<img class="relate_button" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart.png') }}"  />
+				<img class="relate_button post_icon" id="relate_no_{{post.id}}" src="{{ url_for('static', filename='pictures/icons/heart.png') }}"  />
 				{% endif %}
 			</div>
 		</div>

@@ -1,5 +1,4 @@
 
-//getdata is in html template "login"
 
 $( document ).ready(function() {
 

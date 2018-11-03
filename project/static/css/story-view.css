@@ -7,6 +7,7 @@
 }
 
 .textbox {
+	width: 100%;
 	color: white;
 	border: 0;
 	padding: 20px;
@@ -28,6 +29,7 @@
 }
 
 .text{
+	color: white;
 	background-color: transparent;
 	border: none;
 	flex: 1;
@@ -42,54 +44,17 @@
 	outline: none;
 }
 
-
-.post_relate {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+textarea:focus {
+	outline: none;
 }
 
-.like_count {
-	margin-right: 5px;
-}
-
-.post_footer{
-	padding: 10px 0 10px 0;
-	box-sizing: border-box;
+.art_space {
 	display: flex;
-	height: 50px;
-	width: 100%;
-    display: flex;
-	align-items: center;
-	justify-content: flex-start;
-}
-
-.post_footer div{
-	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	flex-direction: row;
-	height: 100%;
 }
 
-.post_footer div img{
-	max-height: 100%;
-	max-width: 100%;
-	height: auto;
-	width: auto;
-}
-
-.date_separator{
-    width: 20%;
-    border:0;
-    border-top: 1px solid;
-    border-color: #adadad;
-}
-
-.footer_space {
-	flex-grow: 1;
-}
-
-.post_delete {
-	margin-right: 5%;
+.art {
+	max-width: 80%;
 }
