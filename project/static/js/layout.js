@@ -3,6 +3,10 @@ $(document).ready(function(){
 
 	close_modals();
 
+	$(".modal_form_button.cancel_button").on("click", function(){
+		close_modals();
+	});
+
 	$(".menu_item#home").on("click", function(){
 		window.location = "/feed";
 	});

@@ -5,10 +5,6 @@ $(document).ready(function(){
 		let id = e.target.id.substring(10);
 
 		open_modal("confirm_delete_modal");
-		
-		$("#delete_post_cancel").on("click", function(e){
-			close_modals();
-		});
 	
 		$("#delete_post_confirm").on("click", function(e){
 			delete_post(id);
@@ -24,6 +20,8 @@ $(document).ready(function(){
 	$(".illustrate_button").on("click", function(e){
 
 		let id = e.target.id.substring(14);
+		
+		$('#upload_art_modal').attr('action', 'illustrate/' + id);
 
 		open_modal("upload_art_modal");
 

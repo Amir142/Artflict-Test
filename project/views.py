@@ -108,7 +108,7 @@ def delete(id):
 		db.session.delete(post)
 		db.session.commit()
 		print("deleted --> " + str(id))
-		return redirect("/feed")
+		return redirect(url_for('feed'))
 	else:
 		return "action not allowed"
 
@@ -134,43 +134,42 @@ def aboutus():
 
 @app.route('/stories/<int:post_id>', methods=['GET', 'POST'])
 @login_required
-def list_detail_stories(post_id):
+def show_story(post_id):
 	form = AddArtForm(request.form)
 	if request.method == "GET":
 		post = Post.query.filter_by(id=post_id).first()
 		return render_template('story-view.html', post=post)
 	else:
+		print("posting in sroty view")
 		pass
 
 
 @app.route('/illustrate/<int:post_id>', methods=['POST'])
 @login_required
 def illustrate(post_id):
-	pass
-	# folder_name = request.form['superhero']
+	folder_name = "static/uploaded_art/post_{}/"
 
-	# target = os.path.join(app.config["APP_ROUTE"], 'files/{}'.format(folder_name))
-	# print(target)
+	target = os.path.join(app.config["PROJECT_DIR"], folder_name.format(post_id) )
+	print(target)
 
-	# if not os.path.isdir(target):
-	# 	os.mkdir(target)
+	if not os.path.isdir(target):
+		os.mkdir(target)
 
-	# print(request.files["file"])
+	print(request.files["file"])
 
-	# for upload in request.files["file"]:
-	# 	print(upload)
-	# 	print("{} is the file name".format(upload.filename))
-	# 	filename = upload.filename
-	# 	# This is to verify files are supported
-	# 	ext = os.path.splitext(filename)[1]
-	# 	if (ext == ".jpg") or (ext == ".png"):
-	# 		print("File supported moving on...")
-	# 	else:
-	# 		render_template("Error.html", message="Files uploaded are not supported...")
-	# 	destination = "/".join([target, filename])
-	# 	print("Accept incoming file:", filename)
-	# 	print("Save it to:", destination)
-	# 	upload.save(destination)
+	upload = request.files["file"]
+	print("{} is the file name".format(upload.filename))
+	filename = upload.filename
+	# This is to verify files are supported
+	ext = os.path.splitext(filename)[1]
+	if (ext == ".jpg") or (ext == ".png"):
+		print("File supported moving on...")
+	else:
+		return "not accepted :C"
+	destination = "/".join([target, filename])
+	print("Accept incoming file:", filename)
+	print("Save it to:", destination)
+	upload.save(destination)
 
-	# # return send_from_directory("images", filename, as_attachment=True)
-	# return render_template("complete.html", image_name=filename)
+	# return send_from_directory("images", filename, as_attachment=True)
+	return redirect(url_for('show_story', post_id=post_id))
